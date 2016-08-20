@@ -1,0 +1,21 @@
+language: ruby
+rvm:
+  - "2.3.0"
+
+
+script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "c2471f4b-ebb1-41a5-b8d5-487f86458829"
+  app: travisrails
+  on:
+      all_branches: true
+
+  run:
+    - "rake heroku:secrets RAILS_ENV=production"
+    - "rake db:create:all"
